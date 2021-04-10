@@ -1,6 +1,10 @@
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import React from "react";
+
 import { RestaurantScreen } from "./src/features/restaurants/screens/restaurant.screen";
+import { Map } from "./src/features/restaurants/screens/map.screen";
+import { Settings } from "./src/features/restaurants/screens/settings.screen";
+
 import {
   useFonts as useOswald,
   Oswald_400Regular,
@@ -8,6 +12,9 @@ import {
 import { useFonts as useLato, Lato_400Regular } from "@expo-google-fonts/lato";
 import { theme } from "./src/infrastructure/theme";
 import { ThemeProvider } from "styled-components/native";
+
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 export default function App() {
   const [oswaldLoaded] = useOswald({
@@ -20,10 +27,18 @@ export default function App() {
     return null;
   }
 
+  const Tab = createBottomTabNavigator();
+
   return (
     <>
       <ThemeProvider theme={theme}>
-        <RestaurantScreen />
+        <NavigationContainer>
+          <Tab.Navigator>
+            <Tab.Screen name="Restaurant" component={RestaurantScreen} />
+            <Tab.Screen name="Map" component={Map} />
+            <Tab.Screen name="Settings" component={Settings} />
+          </Tab.Navigator>
+        </NavigationContainer>
         <ExpoStatusBar />
       </ThemeProvider>
     </>
